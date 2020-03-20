@@ -82,28 +82,28 @@ $image = $row['image'];
               <div class="text-center">
                 <img src=<?php echo $image ?> class="avatar img-circle" alt="avatar"
                   style="height: 100px; width: 100px;">
-                <h6>Upload a different photo...</h6>
-                <input type="file" name="image" class="form-control">
+                <!-- <h6>Upload a different photo...</h6>
+                <input type="file" name="image" class="form-control"> -->
               </div>
             </div>
 
             <div class="col-md-10 personal-info">
 
-              <?php 
+              <?php
             if ($result == 'success') {
                 echo ('<div class="alert text-center alert-success alert-dismissible">
-                        <a class="panel-close close" data-dismiss="alert">×</a> 
+                        <a class="panel-close close" data-dismiss="alert">×</a>
                         <strong>Successfully updated profile.</strong>
                        </div>');
             } elseif ($result == 'failed') {
                 echo ('<div class="alert text-center alert-danger alert-dismissible">
-                        <a class="panel-close close" data-dismiss="alert">×</a> 
+                        <a class="panel-close close" data-dismiss="alert">×</a>
                         <strong>Failed to update profile.</strong>
                        </div>');
             }
         ?>
               <!-- <div class="alert alert-info alert-dismissable">
-          <a class="panel-close close" data-dismiss="alert">×</a> 
+          <a class="panel-close close" data-dismiss="alert">×</a>
           <i class="fa fa-coffee"></i>
           This is an <strong>.alert</strong>. Use this to show important messages to the user.
         </div> -->
@@ -113,7 +113,7 @@ $image = $row['image'];
               <div class="form-group">
                 <label class="col-lg-3 control-label">Name:</label>
                 <div class="col-lg-8">
-                  <input name="name" class="form-control" required="required" type="text" value="<?php echo $name ?>">
+                  <input name="name" class="form-control" readonly required="required" type="text" value="<?php echo $name ?>">
                 </div>
               </div>
               <div class="form-group">
@@ -133,14 +133,14 @@ $image = $row['image'];
               <div class="form-group">
                 <label class="col-lg-3 control-label">Email:</label>
                 <div class="col-lg-8">
-                  <input name="email" class="form-control" required="required" type="email"
+                  <input name="email" class="form-control" readonly required="required" type="email"
                     value="<?php echo $email ?>">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-lg-3 control-label">Mobile:</label>
                 <div class="col-lg-8">
-                  <input name="mobile" class="form-control" required="required" type="text"
+                  <input name="mobile" class="form-control" readonly required="required" type="text"
                     value="<?php echo $mobile ?>">
                 </div>
               </div>
@@ -161,17 +161,17 @@ $image = $row['image'];
               <div class="form-group">
                 <label class="col-md-3 control-label">DOB:</label>
                 <div class="col-md-8">
-                  <input name="dob" class="form-control" required="required" type="date" value=<?php echo $dob ?>>
+                  <input name="dob" class="form-control" readonly required="required" type="date" value=<?php echo $dob ?>>
                 </div>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label class="col-md-3 control-label"></label>
                 <div class="col-md-8">
                   <input type="submit" class="btn btn-primary" value="Save Changes">
                   <span></span>
                   <input type="reset" class="btn btn-default" value="Cancel">
                 </div>
-              </div>
+              </div> -->
           </form>
         </div>
       </div>
