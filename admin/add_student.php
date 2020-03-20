@@ -92,7 +92,15 @@ while ($row = mysqli_fetch_array($result)) {
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Semester:</label>
                   <div class="col-lg-8">
-                    <input name="semester" class="form-control" required="required" type="text">
+                    <select name="semester" class="form-control" required="required">
+                        <option value="0">--Select Semester--</option></option>
+                        <option value="1">First Semester</option>
+                        <option value="2">Second Semester</option>
+                        <option value="3">Third Semester</option>
+                        <option value="4">Fourth Semester</option>
+                        <option value="5">Fifth Semester</option>
+                        <option value="6">Sixth Semester</option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
@@ -104,13 +112,17 @@ while ($row = mysqli_fetch_array($result)) {
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Mobile:</label>
                   <div class="col-lg-8">
-                    <input name="mobile" class="form-control" required="required" type="text">
+                    <input name="mobile" class="form-control" required="required" type="text" maxlength ="10" onkeypress="return isNumber(event)">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Gender:</label>
                   <div class="col-lg-8">
-                    <input name="gender" class="form-control" required="required" type="text">
+                    <select name="department_id" class="form-control" required="required">
+                        <option value="0">--Select Gender--</option></option>
+                        <option value="1">Male</option>
+                       <option value="2">Female</option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
@@ -130,7 +142,7 @@ while ($row = mysqli_fetch_array($result)) {
                   <div class="col-md-8">
                     <input type="submit" class="btn btn-primary" value="Create Student">
                     <span></span>
-                    <input type="reset" class="btn btn-default" value="Cancel">
+                    <input type="reset" class="btn btn-dark" value="Cancel">
                   </div>
                 </div>
 
@@ -151,5 +163,16 @@ while ($row = mysqli_fetch_array($result)) {
   </footer>
 
 </body>
+
+<script>
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
 
 </html>
