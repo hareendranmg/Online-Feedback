@@ -3,16 +3,13 @@
 session_start();
 include_once '../database/dbconfig.php';
 
-$student_id = $_GET['student_id'];
+$student_id = $_POST['student_id'];
 
+$regid = $_POST['regid'];
 $name = $_POST['name'];
-$department_id = $_POST['department_id'];
-$semester = $_POST['semester'];
+$semester_id = $_POST['semester_id'];
 $email = $_POST['email'];
 $mobile = $_POST['mobile'];
-$gender = $_POST['gender'];
-$regid = $_POST['regid'];
-$dob = $_POST['dob'];
 
 $image = '';
 
@@ -30,28 +27,22 @@ if (isset($_FILES['image']) && $_FILES['image']['name'] != "") {
 if ($image == '') {
     $sql = "UPDATE student SET
         name   = '$name',
-        department_id = $department_id,
-        semester = '$semester',
-        gender = '$gender',
-        regid = '$regid',
+        semester_id = $semester_id,
         email  = '$email',
-        mobile = $mobile,
-        dob    = '$dob'
+        mobile = $mobile
         WHERE id = $student_id";
 } else {
     $sql = "UPDATE student SET
         name   = '$name',
-        department_id = $department_id,
-        semester = '$semester',
-        gender = '$gender',
-        regid = '$regid',
+        semester_id = $semester_id,
         email  = '$email',
         mobile = $mobile,
-        image  = '$image',
-        dob    = '$dob'
+        image  = '$image'
         WHERE id = $student_id";
 }
 
+
+// print_r($sql); exit;
 $result = mysqli_query($conn, $sql);
 
 

@@ -67,9 +67,17 @@ $image = $row['image'];
     </div>
 
       <div class="col-sm-10">
-        <div>
-          <h2>Faculty Profile</h2>
-          <hr>
+        <br />
+        <div class="container">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-9"><h2>Add Faculty</h2></div><br />
+            <div class="col-md-3">
+              <a href="view_faculty.php" class="btn btn-success">Go back</a>
+            </div>
+          </div>
+        </div>
+        <br />
           <div class="row">
             <form class="form-horizontal" method="post"
               action="add_faculty_controller.php" enctype="multipart/form-data">

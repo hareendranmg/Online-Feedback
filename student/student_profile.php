@@ -148,7 +148,10 @@ $image = $row['image'];
                 <label class="col-lg-3 control-label">Gender:</label>
                 <div class="col-lg-8">
                   <input name="gender" class="form-control" readonly required="required" type="text"
-                    value="<?php echo $gender ?>">
+                    value="<?php
+                             if($gender == 1) echo "Male";
+                             else echo "Female"; 
+                            ?>">
                 </div>
               </div>
               <div class="form-group">

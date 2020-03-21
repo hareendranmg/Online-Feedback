@@ -76,8 +76,12 @@ $image = $row['image'];
       <div class="col-md-2">
         <div class="text-center">
           <img src=<?php echo $image ?> class="avatar img-circle" alt="avatar" style="height: 100px; width: 100px;">
-          <h6>Upload a different photo...</h6>
-          <input type="file" name="image" class="form-control">
+          <br />
+          <br />
+            <div class="form-group">
+              <label>Upload a different photo...</label>
+              <input type="file">
+            </div>
         </div>
       </div>
 

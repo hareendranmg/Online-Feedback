@@ -1,6 +1,23 @@
 <?php
 session_start();
 include_once '../database/dbconfig.php';
+
+$department_id = $_SESSION['department_id'];
+
+// $ans_sql = "select qn_name,sum(answer) from answers inner join questions on questions.qn_id = answers.qn_id where department_id = ".$department_id." group by questions.qn_id";
+// $ans_result = mysqli_query($conn, $ans_sql);
+// $ans_rows = mysqli_fetch_assoc($ans_result);
+
+// print_r($ans_rows); exit;
+
+// $qn_sql = "select * from questions";
+// $qn_result = mysqli_query($conn, $qn_sql);
+// while($qn_row = mysqli_fetch_assoc($qn_result)) {
+//     $qn_rows[] = $qn_row;
+// }
+// $count_qn_rows = count($qn_rows);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -46,8 +63,8 @@ include_once '../database/dbconfig.php';
           <ul class="nav nav-pills nav-stacked">
             <li><a href="faculty_dashboard.php">Home</a></li>
             <li><a href="faculty_profile.php">Profile</a></li>
-            <li><a href="view_feedback.php">View Feedback</a></li>
-            <li class="active"><a href="view_students.php">Students</a></li>
+            <li class="active"><a href="view_feedback.php">View Feedback</a></li>
+            <li><a href="view_students.php">Students</a></li>
             <li><a href="../logout.php">Logout</a></li>
           </ul>
           <br />
@@ -55,7 +72,7 @@ include_once '../database/dbconfig.php';
 
         <div class="col-sm-10">
           <div>
-            <h2>Students</h2>
+            <h2>Feedback</h2>
           </div>
           <div class="table100 ver6 m-b-110">
             <!-- <form> -->
@@ -64,23 +81,33 @@ include_once '../database/dbconfig.php';
               <thead>
                 <tr class="row100 head">
                   <th class="column100 column1" data-column="column1">
-                    Sl No
+                    Qn No
                   </th>
                   <th class="column100 column2" data-column="column2">
-                    Student Name
+                    Question
                   </th>
                   <th class="column100 column3" data-column="column3">
-                    Action
+                    Average
+                  </th>
+                  <th class="column100 column4" data-column="column4">
+                    Grade
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                    $department_id = $_SESSION['department_id'];
-                    $sql = 'SELECT * FROM `student` where department_id = '.$department_id;
-                    $result = mysqli_query($conn, $sql);
+                    $ans_sql = "select qn_name,avg(answer) as avg from answers inner join questions on questions.qn_id = answers.qn_id where department_id = " . $department_id . " group by questions.qn_id";
+                    $ans_result = mysqli_query($conn, $ans_sql);
+
+                    
                     $count = 0;
-                    while ($rows = mysqli_fetch_array($result)) {
+                    while ($ans_rows = mysqli_fetch_assoc($ans_result)) {
+                        $avg = ($ans_rows['avg'] * 100) / 5;
+                        $avg_round = round($ans_rows['avg']);
+                        $grades_sql = "select * from grades where id = ".$avg_round;
+                        $grades_sql_result = mysqli_query($conn, $grades_sql);
+                        $grades_row = mysqli_fetch_assoc($grades_sql_result);
+
                         $count++;
                 ?>
                     <tr class="row100 data">
@@ -88,10 +115,17 @@ include_once '../database/dbconfig.php';
                         <?php echo $count; ?>
                       </td>
                       <td class="column100 column2 value" data-column="column2">
-                        <?php echo $rows['name']; ?>
+                        <?php echo $ans_rows['qn_name']; ?>
                       </td>
-                      <td class="column100 column3" data-column="column3">
-                        <a class="btn btn-block btn-info" href="view_student_profile.php?student_id=<?php echo $rows['id'] ?>">View Profile</a>
+                      <td class="column100 column3 value" data-column="column3">
+                        <div class="progress" style=" height: 20px;width:100%;margin-bottom:0%;">
+                            <div class="progress-bar progress-bar-striped  active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $avg."%"; ?>">
+                                 <?php echo $avg."%"; ?>  
+                            </div>
+                        </div>
+                      </td>
+                      <td class="column100 column4 value" data-column="column4" style="color: white">
+                        <?php echo $grades_row['name']; ?>
                       </td>
                     </tr>
                 <?php

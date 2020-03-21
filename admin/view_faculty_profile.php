@@ -67,21 +67,33 @@ $image = $row['image'];
     </div>
 
       <div class="col-sm-10">
-        <div>
-          <h2>Faculty Profile</h2>
+        <div class="container">
+        <br />
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-9"><h2>Faculty Profile</h2></div><br />
+            <div class="col-md-3">
+              <a href="view_faculty.php" class="btn btn-success">Go back</a>
+            </div>
+          </div>
+        </div>
+        <br />
+
           <hr>
           <div class="row">
             <form class="form-horizontal" method="post"
               action="faculty_profile_update.php?faculty_id=<?php echo $faculty_id; ?>" enctype="multipart/form-data">
 
               <div class="col-md-2">
-                <div class="text-center">
-                  <img src=<?php echo $image ?> class="avatar img-circle" alt="avatar"
-                    style="height: 100px; width: 100px;">
-                  <h6>Upload a different photo...</h6>
-                  <input type="file" name="image" class="form-control">
-                </div>
+        <div class="text-center">
+          <img src=<?php echo $image ?> class="avatar img-circle" alt="avatar" style="height: 100px; width: 100px;">
+          <br />
+          <br />
+              <div class="form-group">
+                <label>Upload a different photo...</label>
+                <input type="file">
               </div>
+        </div>              </div>
 
               <div class="col-md-10 personal-info">
 

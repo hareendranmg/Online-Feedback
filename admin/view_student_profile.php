@@ -15,7 +15,12 @@ $dep_result = mysqli_query($conn, $dep_sql);
 $dep_row = mysqli_fetch_array($dep_result);
 $department = $dep_row['name'];
 
-$semester = $row['semester'];
+$semester_id = $row['semester_id'];
+$sem_sql = "SELECT * FROM `semester` WHERE `id` = " . $semester_id;
+$sem_result = mysqli_query($conn, $sem_sql);
+$sem_row = mysqli_fetch_array($sem_result);
+$semester = $sem_row['name'];
+
 $email = $row['email'];
 $mobile = $row['mobile'];
 $gender = $row['gender'];
@@ -70,20 +75,32 @@ $image = $row['image'];
     </div>
 
       <div class="col-sm-10">
-        <div>
-          <h2>Student Profile</h2>
-          <hr>
+    <div class="container">
+    <br />
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-9"><h2>Student Profile</h2></div><br />
+            <div class="col-md-3">
+              <a href="view_students.php" class="btn btn-success">Go back</a>
+            </div>
+          </div>
+        </div>
+        <br />
+  	<hr>
           <div class="row">
             <form class="form-horizontal" method="post"
               action="student_profile_update.php?student_id=<?php echo $student_id; ?>" enctype="multipart/form-data">
 
               <div class="col-md-2">
                 <div class="text-center">
-                  <img src=<?php echo $image ?> class="avatar img-circle" alt="avatar"
-                    style="height: 100px; width: 100px;">
-                  <h6>Upload a different photo...</h6>
-                  <input type="file" name="image" class="form-control">
-                </div>
+                  <img src=<?php echo $image ?> class="avatar img-circle" alt="avatar" style="height: 100px; width: 100px;">
+                  <br />
+                  <br />
+                  <div class="form-group">
+                    <label>Upload a different photo...</label>
+                    <input type="file">
+                  </div>
+                </div>              
               </div>
 
               <div class="col-md-10 personal-info">
@@ -130,8 +147,20 @@ $image = $row['image'];
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Semester:</label>
                   <div class="col-lg-8">
-                    <input name="semester" class="form-control" required="required" type="text"
-                      value="<?php echo $semester ?>">
+                    <select name="semester" class="form-control" required="required">
+                        <option value="<?php echo $semester_id; ?>"><?php echo $semester ?> </option>
+                        <option>====================</option></option>
+                                <?php 
+                                  $sql = "select * from semester";
+                                  $result = mysqli_query($conn, $sql);
+
+                                  while($row = mysqli_fetch_array($result)) {
+                                ?>
+                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?> </option>
+                                        <?php
+                                  }
+                                ?>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
@@ -144,15 +173,17 @@ $image = $row['image'];
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Mobile:</label>
                   <div class="col-lg-8">
-                    <input name="mobile" class="form-control" required="required" type="text"
-                      value="<?php echo $mobile ?>">
+                    <input name="mobile" class="form-control" required="required" type="text" maxlength ="10" onkeypress="return isNumber(event)" value="<?php echo $mobile; ?>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Gender:</label>
                   <div class="col-lg-8">
                     <input name="gender" class="form-control" required="required" type="text"
-                      value="<?php echo $gender ?>">
+                    value="<?php
+                             if($gender == 1) echo "Male";
+                             else echo "Female"; 
+                            ?>">
                   </div>
                 </div>
                 <div class="form-group">
@@ -181,7 +212,6 @@ $image = $row['image'];
           </div>
         </div>
       </div>
-      <hr>
     </div>
   </div>
   </div>
@@ -194,5 +224,16 @@ $image = $row['image'];
   </footer>
 
 </body>
+
+<script>
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
 
 </html>
