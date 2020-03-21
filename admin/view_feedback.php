@@ -1,8 +1,6 @@
 <?php
 session_start();
 include_once '../database/dbconfig.php';
-
-$department_id = $_SESSION['department_id'];
 ?>
 
 <!DOCTYPE html>
@@ -40,25 +38,28 @@ $department_id = $_SESSION['department_id'];
   <body>
     <div class="container-fluid">
       <div class="row content">
-        <div class="col-sm-2 sidenav">
-          <h3>
-            Welcome
-            <?php echo ($_SESSION['login_user']); ?>
-          </h3>
-          <ul class="nav nav-pills nav-stacked">
-            <li><a href="faculty_dashboard.php">Home</a></li>
-            <li><a href="faculty_profile.php">Profile</a></li>
-            <li class="active"><a href="view_feedback.php">View Feedback</a></li>
-            <li><a href="view_students.php">Students</a></li>
-            <li><a href="../logout.php">Logout</a></li>
-          </ul>
-          <br />
-        </div>
+      <div class="col-sm-2 sidenav">
+        <h3>Welcome <?php echo ($_SESSION['login_user']); ?></h3>
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="admin_dashboard.php">Home</a></li>
+          <li class="active"><a href="view_feedback.php">View Feedback</a></li>
+          <li><a href="view_faculty.php">Faculty</a></li>
+          <li><a href="view_students.php">Students</a></li>
+          <li><a href="../logout.php">Logout</a></li>
+        </ul><br>
+      </div>
 
         <div class="col-sm-10">
-          <div>
-            <h2>Feedback</h2>
+                 <br />
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-9"><h2>Feedback</h2></div><br />
+            <div class="col-md-3">
+              <a href="view_dep_feedback.php" class="btn btn-success">View feedback by department</a>
+            </div>
           </div>
+        </div>
+        <br />
           <div class="table100 ver6 m-b-110">
             <!-- <form> -->
 
@@ -81,7 +82,7 @@ $department_id = $_SESSION['department_id'];
               </thead>
               <tbody>
                 <?php
-                    $ans_sql = "select qn_name,avg(answer) as avg from answers inner join questions on questions.qn_id = answers.qn_id where department_id = " . $department_id . " group by questions.qn_id";
+                    $ans_sql = "select qn_name,avg(answer) as avg from answers inner join questions on questions.qn_id = answers.qn_id group by questions.qn_id";
                     $ans_result = mysqli_query($conn, $ans_sql);
 
                     
