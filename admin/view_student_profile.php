@@ -27,6 +27,7 @@ $gender = $row['gender'];
 $regid = $row['regid'];
 $dob = $row['dob'];
 $image = $row['image'];
+$feedback_submitted = $row['feedback_submitted'];
 
 ?>
 <!DOCTYPE html>
@@ -68,6 +69,7 @@ $image = $row['image'];
       <ul class="nav nav-pills nav-stacked">
         <li><a href="admin_dashboard.php">Home</a></li>
         <li><a href="view_feedback.php">View Feedback</a></li>
+        <li><a href="view_questions.php">Questions</a></li>
         <li><a href="view_faculty.php">Faculty</a></li>
         <li class="active"><a href="view_students.php">Students</a></li>
         <li><a href="../logout.php">Logout</a></li>
@@ -88,6 +90,7 @@ $image = $row['image'];
         <br />
   	<hr>
           <div class="row">
+          <div class="container-fluid">
             <form class="form-horizontal" method="post"
               action="student_profile_update.php?student_id=<?php echo $student_id; ?>" enctype="multipart/form-data">
 
@@ -147,7 +150,7 @@ $image = $row['image'];
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Semester:</label>
                   <div class="col-lg-8">
-                    <select name="semester" class="form-control" required="required">
+                    <select name="semester_id" class="form-control" required="required">
                         <option value="<?php echo $semester_id; ?>"><?php echo $semester ?> </option>
                         <option>====================</option></option>
                                 <?php 
@@ -179,11 +182,10 @@ $image = $row['image'];
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Gender:</label>
                   <div class="col-lg-8">
-                    <input name="gender" class="form-control" required="required" type="text"
-                    value="<?php
-                             if($gender == 1) echo "Male";
-                             else echo "Female"; 
-                            ?>">
+                    <select name="gender" class="form-control" required="required">
+                      <option value="1" <?php if ($gender == 1) echo "selected"; ?>>Male</option>
+                      <option value="2" <?php if ($gender == 2) echo "selected"; ?>>Female</option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
@@ -200,6 +202,15 @@ $image = $row['image'];
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-lg-3 control-label">Feedback Submitted:</label>
+                  <div class="col-lg-8">
+                    <select name="feedback_submitted" class="form-control" required="required">
+                      <option value="1" <?php if ($feedback_submitted == 1) echo "selected"; ?>>Submitted</option>
+                      <option value="0" <?php if ($feedback_submitted == 0) echo "selected"; ?>>Not Submitted</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-md-3 control-label"></label>
                   <div class="col-md-8">
                     <input type="submit" class="btn btn-primary" value="Save Changes">
@@ -210,6 +221,7 @@ $image = $row['image'];
 
             </form>
           </div>
+        </div>
         </div>
       </div>
     </div>

@@ -18,7 +18,12 @@ $dep_result = mysqli_query($conn, $dep_sql);
 $dep_row = mysqli_fetch_array($dep_result);
 $department = $dep_row['name'];
 
-$semester = $row['semester'];
+$semester_id = $row['semester_id'];
+$sem_sql = "SELECT * FROM `semester` WHERE `id` = " . $semester_id;
+$sem_result = mysqli_query($conn, $sem_sql);
+$sem_row = mysqli_fetch_array($sem_result);
+$semester = $sem_row['name'];
+
 $email = $row['email'];
 $mobile = $row['mobile'];
 $gender = $row['gender'];

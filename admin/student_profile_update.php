@@ -5,14 +5,16 @@ include_once '../database/dbconfig.php';
 
 $student_id = $_GET['student_id'];
 
+
 $name = $_POST['name'];
 $department_id = $_POST['department_id'];
-$semester = $_POST['semester'];
+$semester_id = $_POST['semester_id'];
 $email = $_POST['email'];
 $mobile = $_POST['mobile'];
 $gender = $_POST['gender'];
 $regid = $_POST['regid'];
 $dob = $_POST['dob'];
+$feedback_submitted = $_POST['feedback_submitted'];
 
 $image = '';
 
@@ -31,24 +33,26 @@ if ($image == '') {
     $sql = "UPDATE student SET
         name   = '$name',
         department_id = $department_id,
-        semester = '$semester',
-        gender = '$gender',
+        semester_id = '$semester_id',
+        gender = $gender,
         regid = '$regid',
         email  = '$email',
         mobile = $mobile,
-        dob    = '$dob'
+        dob    = '$dob',
+        feedback_submitted = $feedback_submitted
         WHERE id = $student_id";
 } else {
     $sql = "UPDATE student SET
         name   = '$name',
         department_id = $department_id,
-        semester = '$semester',
-        gender = '$gender',
+        semester_id = '$semester_id',
+        gender = $gender,
         regid = '$regid',
         email  = '$email',
         mobile = $mobile,
         image  = '$image',
-        dob    = '$dob'
+        dob    = '$dob',
+        feedback_submitted = $feedback_submitted
         WHERE id = $student_id";
 }
 

@@ -41,6 +41,7 @@ include_once '../database/dbconfig.php';
         <ul class="nav nav-pills nav-stacked">
           <li><a href="admin_dashboard.php">Home</a></li>
           <li><a href="view_feedback.php">View Feedback</a></li>
+          <li><a href="view_questions.php">Questions</a></li>
           <li class="active"><a href="view_faculty.php">Faculty</a></li>
           <li><a href="view_students.php">Students</a></li>
           <li><a href="../logout.php">Logout</a></li>
