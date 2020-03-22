@@ -77,8 +77,6 @@ $feedback_submitted = $row['feedback_submitted'];
     </div>
 
       <div class="col-sm-10">
-    <div class="container">
-    <br />
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-9"><h2>Student Profile</h2></div><br />

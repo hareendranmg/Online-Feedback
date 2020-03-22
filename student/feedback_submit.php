@@ -4,6 +4,7 @@ session_start();
 require_once '../database/dbconfig.php';
 
 $student_regid = $_SESSION['student_regid'];
+$student_id = $_SESSION['login_user_id'];
 $department_id = $_SESSION['department_id'];
 $data = $_POST['data'];
 $status = 0;
@@ -31,8 +32,8 @@ foreach ($data as $key) {
         $result_query = mysqli_query($conn, $sql);
         $row = mysqli_fetch_array($result_query);
 
-        $sql = "INSERT INTO `answers` (`student_regid`, `qn_id`, `answer`, `department_id`)
-            VALUES (" . $student_regid . "," . $row['qn_id'] . "," . $key[2] . "," . $department_id.")";
+        $sql = "INSERT INTO `answers` (`student_id`, `qn_id`, `answer`, `department_id`)
+            VALUES (" . $student_id . "," . $row['qn_id'] . "," . $key[2] . "," . $department_id.")";
         $result_query_ans = mysqli_query($conn, $sql);
 
         $sql = "update student set feedback_submitted = 1 where regid = ".$student_regid;

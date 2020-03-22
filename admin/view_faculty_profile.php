@@ -68,8 +68,6 @@ $image = $row['image'];
     </div>
 
       <div class="col-sm-10">
-        <div class="container">
-        <br />
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-9"><h2>Faculty Profile</h2></div><br />
@@ -156,7 +154,7 @@ while ($row = mysqli_fetch_array($result)) {
                   <label class="col-lg-3 control-label">Mobile:</label>
                   <div class="col-lg-8">
                     <input name="mobile" class="form-control" required="required" type="text"
-                      value="<?php echo $mobile ?>">
+                      maxlength ="10" onkeypress="return isNumber(event)" value="<?php echo $mobile; ?>">
                   </div>
                 </div>
                 <div class="form-group">
@@ -185,5 +183,16 @@ while ($row = mysqli_fetch_array($result)) {
   </footer>
 
 </body>
+
+<script>
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
 
 </html>
