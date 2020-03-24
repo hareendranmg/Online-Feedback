@@ -48,6 +48,22 @@ include_once '../database/dbconfig.php';
                                 </ul><br>
                         </div>
 
+                        <?php
+                        $student_id = $_SESSION['login_user_id'];
+                        $sql = "select feedback_submitted from student where id = ".$student_id;
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_array($result);
+
+                        if($row['feedback_submitted'] == 1) {
+                        ?>
+                                <div id="col-sm-10 success_div">
+                                        <div class="text-center">
+                                          <h1>Already submitted feedback.</h1>
+                                        </div>
+                                </div>
+                        <?php 
+                        } else{
+                        ?>                                
                         <div class="col-sm-10">
                                 <div>
                                         <h2>Feedback Form</h2>
@@ -129,6 +145,9 @@ while ($rows = mysqli_fetch_array($result)) {
                                 <!-- </form> -->
                                 </div>
                         </div>
+                        <?php 
+                        }
+                        ?>
                 </div>
         </div>
 

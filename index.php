@@ -65,12 +65,12 @@
           </div>
           <div class="form-group row">
             <div class="col-sm-10">
-              <input type="text" name="username" class="form-control" placeholder="Username">
+              <input type="text" name="username" id="username" class="form-control" placeholder="Username">
             </div>
           </div>
           <div class="form-group row">
             <div class="col-sm-10">
-              <input type="text" name="password" class="form-control" placeholder="Password">
+              <input type="password" name="password" id="password" class="form-control" placeholder="Password">
             </div>
           </div>
           <div class="form-group row">
@@ -88,10 +88,26 @@
     </footer>
   </div>
   <!-- partial -->
+
+</body>
   <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js'></script>
   <script src="./js/index.script.js"></script>
 
-</body>
+  <script>
+    $('#type').change(function() {
+        if($(this).val() === 'student') {
+          $("#username").attr("placeholder", "Register Number")
+          $("#password").attr("placeholder", "yyyy-mm-dd")
+        } else if($(this).val() === 'faculty') {
+          $("#username").attr("placeholder", "Name")
+          $("#password").attr("placeholder", "Employee ID")
+        } else if($(this).val() === 'admin') {
+          $("#username").attr("placeholder", "Username")
+          $("#password").attr("placeholder", "Password")
+        }
+
+    });    
+  </script>
 
 </html>

@@ -53,7 +53,7 @@ include_once '../database/dbconfig.php';
         <br />
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-9"><h2>Department wise Feedback</h2></div><br />
+            <div class="col-md-9"><h2>Student wise Feedback</h2></div><br />
             <div class="col-md-3">
               <a href="view_feedback.php" class="btn btn-success">Go Back</a>
             </div>
@@ -62,21 +62,21 @@ include_once '../database/dbconfig.php';
         <br />
 
         <div class="pull-right">
-          <form class="form-inline" method="get" action="view_dep_feedback.php">
+          <form class="form-inline" method="get" action="view_stud_feedback.php">
               <div class="container-fluid ">
                 <div class="form-group">
-                  <select name="department_id" class="form-control" required="required">
-                    <option>--Select Department--</option>
+                  <select name="student_id" class="form-control" required="required">
+                    <option>--Select student--</option>
                       <?php
-                        $sql = "select * from department";
-                        $result = mysqli_query($conn, $sql);
+$sql = "select * from student";
+$result = mysqli_query($conn, $sql);
 
-                        while ($row = mysqli_fetch_array($result)) {
-                          ?>
+while ($row = mysqli_fetch_array($result)) {
+    ?>
                     <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?> </option>
                        <?php
-                        }
-                        ?>
+}
+?>
                   </select>
                   <input type="submit" class="btn btn-primary" value="View Result">
                 </div>
@@ -101,7 +101,7 @@ include_once '../database/dbconfig.php';
                     Question
                   </th>
                   <th class="column100 column3" data-column="column3">
-                    Average
+                    Student
                   </th>
                   <th class="column100 column4" data-column="column4">
                     Grade
@@ -110,18 +110,14 @@ include_once '../database/dbconfig.php';
               </thead>
               <tbody>
                 <?php
-                    $department_id = $_GET['department_id'];
-$ans_sql = "select qn_name,avg(answer) as avg from answers inner join questions on questions.qn_id = answers.qn_id where department_id = " . $department_id . " group by questions.qn_id";
+$student_id = $_GET['student_id'];
+$ans_sql = "select student.name as name, qn_name,grades.name as grade from questions inner join answers on questions.qn_id = answers.qn_id inner join grades on grades.id = answers.answer inner join student on student.id = answers.student_id where student_id =".$student_id;
 $ans_result = mysqli_query($conn, $ans_sql);
+
+// print_r($ans_sql);
 
 $count = 0;
 while ($ans_rows = mysqli_fetch_assoc($ans_result)) {
-    $avg = ($ans_rows['avg'] * 100) / 5;
-    $avg_round = round($ans_rows['avg']);
-    $grades_sql = "select * from grades where id = " . $avg_round;
-    $grades_sql_result = mysqli_query($conn, $grades_sql);
-    $grades_row = mysqli_fetch_assoc($grades_sql_result);
-
     $count++;
     ?>
                     <tr class="row100 data">
@@ -132,14 +128,10 @@ while ($ans_rows = mysqli_fetch_assoc($ans_result)) {
                         <?php echo $ans_rows['qn_name']; ?>
                       </td>
                       <td class="column100 column3 value" data-column="column3">
-                        <div class="progress" style=" height: 20px;width:100%;margin-bottom:0%;">
-                            <div class="progress-bar progress-bar-striped  active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $avg . "%"; ?>">
-                                 <?php echo $avg . "%"; ?>
-                            </div>
-                        </div>
+                        <?php echo $ans_rows['name']; ?>
                       </td>
                       <td class="column100 column4 value" data-column="column4" style="color: white">
-                        <?php echo $grades_row['name']; ?>
+                        <?php echo $ans_rows['grade']; ?>
                       </td>
                     </tr>
                 <?php

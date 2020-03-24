@@ -54,7 +54,10 @@ include_once '../database/dbconfig.php';
                  <br />
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-9"><h2>Feedback</h2></div><br />
+            <div class="col-md-6"><h2>Feedback</h2></div><br />
+            <div class="col-md-3">
+              <a href="view_stud_feedback.php" class="btn btn-success">View feedback by student</a>
+            </div>
             <div class="col-md-3">
               <a href="view_dep_feedback.php" class="btn btn-success">View feedback by department</a>
             </div>

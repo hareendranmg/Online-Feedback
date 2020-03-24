@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 20, 2020 at 12:45 AM
+-- Generation Time: Mar 22, 2020 at 12:06 PM
 -- Server version: 5.7.29-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.3
 
@@ -47,7 +47,8 @@ INSERT INTO `admin` (`admin_id`, `username`, `password`) VALUES
 
 CREATE TABLE `answers` (
   `answer_id` int(11) NOT NULL,
-  `student_regid` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
   `qn_id` int(11) NOT NULL,
   `answer` int(11) NOT NULL,
   `answered_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -57,9 +58,13 @@ CREATE TABLE `answers` (
 -- Dumping data for table `answers`
 --
 
-INSERT INTO `answers` (`answer_id`, `student_regid`, `qn_id`, `answer`, `answered_time`) VALUES
-(1, 2000, 1, 5, '2020-03-18 17:42:17'),
-(2, 2000, 2, 5, '2020-03-18 17:42:17');
+INSERT INTO `answers` (`answer_id`, `student_id`, `department_id`, `qn_id`, `answer`, `answered_time`) VALUES
+(1, 1, 2, 1, 5, '2020-03-22 05:22:43'),
+(2, 1, 2, 2, 4, '2020-03-22 05:22:43'),
+(3, 1, 2, 5, 3, '2020-03-22 05:22:44'),
+(4, 1, 1, 1, 4, '2020-03-22 06:15:11'),
+(5, 1, 1, 2, 3, '2020-03-22 06:15:11'),
+(6, 1, 1, 5, 5, '2020-03-22 06:15:11');
 
 -- --------------------------------------------------------
 
@@ -103,45 +108,29 @@ CREATE TABLE `faculty` (
 --
 
 INSERT INTO `faculty` (`id`, `name`, `emp_code`, `department_id`, `email`, `mobile`, `image`) VALUES
-(1, 'Hari', '1000', 3, 'hari@gmail.com', 9876543212, '../img/Feedback-Feature.jpg'),
-(2, 'Hari indran', '1001', 1, 'xdddx@sfds.gh', 494945994949, '../img/Feedback-Feature.jpg'),
-(3, 'sdsdf', '1212', 2, 'jhhj@sfsd.ds', 554515, '../img/no_image.jpg');
+(1, 'Hari', '1000', 1, 'hari@gmail.com', 9876543210, '../img/about_background.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feedback`
+-- Table structure for table `grades`
 --
 
-CREATE TABLE `feedback` (
+CREATE TABLE `grades` (
   `id` int(11) NOT NULL,
-  `student_id` varchar(50) NOT NULL,
-  `faculty_id` varchar(50) NOT NULL,
-  `Teacher provided the course outline having weekly content plan w` enum('5','4','3','2','1') NOT NULL,
-  `Course objectives,learning outcomes and grading criteria are cle` enum('5','4','3','2','1') NOT NULL,
-  `Course integrates throretical course concepts with the real worl` enum('5','4','3','2','1') NOT NULL,
-  `Teacher is punctual,arrives on time and leaves on time` enum('5','4','3','2','1') NOT NULL,
-  `Teacher is good at stimulating the interest in the course conten` enum('5','4','3','2','1') NOT NULL,
-  `Teacher is good at explaining the subject matter` enum('5','4','3','2','1') NOT NULL,
-  `Teacher's presentation was clear,loud ad easy to understand` enum('5','4','3','2','1') NOT NULL,
-  `Teacher is good at using innovative teaching methods/ways` enum('5','4','3','2','1') NOT NULL,
-  `Teacher is available and helpful during counseling hours` enum('5','4','3','2','1') NOT NULL,
-  `Teacher has competed the whole course as per course outline` enum('5','4','3','2','1') NOT NULL,
-  `Teacher was always fair and impartial:` enum('5','4','3','2','1') NOT NULL,
-  `Assessments conducted are clearly connected to maximize learinin` enum('5','4','3','2','1') NOT NULL,
-  `What I liked about the course` text NOT NULL,
-  `Why I disliked about the course` text NOT NULL,
-  `date` date NOT NULL
+  `name` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `feedback`
+-- Dumping data for table `grades`
 --
 
-INSERT INTO `feedback` (`id`, `student_id`, `faculty_id`, `Teacher provided the course outline having weekly content plan w`, `Course objectives,learning outcomes and grading criteria are cle`, `Course integrates throretical course concepts with the real worl`, `Teacher is punctual,arrives on time and leaves on time`, `Teacher is good at stimulating the interest in the course conten`, `Teacher is good at explaining the subject matter`, `Teacher's presentation was clear,loud ad easy to understand`, `Teacher is good at using innovative teaching methods/ways`, `Teacher is available and helpful during counseling hours`, `Teacher has competed the whole course as per course outline`, `Teacher was always fair and impartial:`, `Assessments conducted are clearly connected to maximize learinin`, `What I liked about the course`, `Why I disliked about the course`, `date`) VALUES
-(16, 'ravi@gmail.com', 'rav@gmail.com', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '\r\nddddddddddddd', 'aa', '2016-07-15'),
-(17, 'sanjeevtech2@gmail.com', 'rav@gmail.com', '5', '3', '1', '5', '5', '3', '3', '3', '3', '5', '5', '5', '\r\n', '\r\n', '2016-07-15'),
-(18, 'warda@yahoo.com', 'rav@gmail.com', '5', '5', '5', '2', '1', '5', '5', '4', '5', '5', '5', '5', '\r\ndfdfdfdfdfd', '\r\n', '2016-07-17');
+INSERT INTO `grades` (`id`, `name`) VALUES
+(1, 'Poor'),
+(2, 'Average'),
+(3, 'Good'),
+(4, 'Very Good'),
+(5, 'Excellent');
 
 -- --------------------------------------------------------
 
@@ -159,8 +148,32 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`qn_id`, `qn_name`) VALUES
-(1, 'Teacher is good at explaining the subject matter?'),
-(2, 'Teacher is punctual in class?');
+(1, 'Teacher is good at explaining subject'),
+(2, 'Teacher is punctual?'),
+(5, 'Teacher regularly takes class?');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `semester`
+--
+
+CREATE TABLE `semester` (
+  `id` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `semester`
+--
+
+INSERT INTO `semester` (`id`, `name`) VALUES
+(1, 'First Semester'),
+(2, 'Second Semester'),
+(3, 'Third Semester'),
+(4, 'Fourth Semester'),
+(5, 'Fifth Semester'),
+(6, 'Sixth Semester');
 
 -- --------------------------------------------------------
 
@@ -171,12 +184,12 @@ INSERT INTO `questions` (`qn_id`, `qn_name`) VALUES
 CREATE TABLE `student` (
   `id` int(11) NOT NULL,
   `name` char(40) NOT NULL,
+  `gender` int(11) NOT NULL,
   `email` varchar(40) NOT NULL,
   `password` varchar(40) DEFAULT NULL,
   `mobile` bigint(11) NOT NULL,
   `department_id` int(11) NOT NULL,
-  `semester` varchar(10) NOT NULL,
-  `gender` varchar(40) NOT NULL,
+  `semester_id` int(10) NOT NULL,
   `image` varchar(50) NOT NULL DEFAULT '../img/no_image.jpg',
   `dob` date NOT NULL,
   `regid` varchar(20) NOT NULL,
@@ -187,16 +200,8 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`id`, `name`, `email`, `password`, `mobile`, `department_id`, `semester`, `gender`, `image`, `dob`, `regid`, `feedback_submitted`) VALUES
-(1, 'Akhil Ignatius', 'akhiltvm@gmail.com', 'akhil', 9876543210, 2, '6', 'Male', '../img/Feedback-Feature.jpg', '2002-03-15', '2000', 1),
-(2, 'arjun', 'arjun@gmail.com', 'arjun', 987654321, 1, '6', 'Male', '../img/no_image.jpg', '2000-10-15', '2001', 0),
-(3, 'abhi', 'abhi@gmail.com', 'abhi', 987654321, 1, '6', 'Male', '../img/no_image.jpg', '2000-10-06', '2002', 0),
-(4, 'ram', 'ram@gmail.com', 'ram', 989898989, 2, '6', 'Male', '../img/no_image.jpg', '2000-08-12', '2003', 0),
-(5, 'sdxbx', 'safdsf@dgdfg.hdfg', NULL, 4566, 3, '5', 'sscsd', '../img/no_image.jpg', '1996-07-17', '555', 0),
-(6, 'sdgds', '556fds@fs.sfsd', NULL, 44848, 1, '554', '545', '../img/no_image.jpg', '2022-04-21', '454', 0),
-(7, 'knjnn', 'asfdsf@sgdf.dgdx', NULL, 5555555555555555, 1, '555', 'sdgggggggg', '../img/no_image.jpg', '2019-02-18', '5555555', 0),
-(12, 'jhhj', 'sgdsd@fsdf.sdfs', NULL, 455, 1, '44', 'sfs', '../img/Feedback-Feature.jpg', '2021-04-21', '45', 0),
-(13, 'leser', 'kariki@kari.sfs', NULL, 5555, 2, '1', '55', '../img/Feedback-Feature.jpg', '2021-04-21', '65', 0);
+INSERT INTO `student` (`id`, `name`, `gender`, `email`, `password`, `mobile`, `department_id`, `semester_id`, `image`, `dob`, `regid`, `feedback_submitted`) VALUES
+(1, 'Akhil Ignacius', 1, 'akhiltvm@gmail.com', 'akhil', 9876543210, 1, 6, '../img/Feedback-Feature.jpg', '2000-03-15', '2000', 1);
 
 --
 -- Indexes for dumped tables
@@ -229,16 +234,16 @@ ALTER TABLE `faculty`
   ADD UNIQUE KEY `emp_code` (`emp_code`);
 
 --
--- Indexes for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `questions`
 --
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`qn_id`);
+
+--
+-- Indexes for table `semester`
+--
+ALTER TABLE `semester`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `student`
@@ -262,17 +267,17 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `feedback`
+-- AUTO_INCREMENT for table `questions`
 --
-ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+ALTER TABLE `questions`
+  MODIFY `qn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `student`
 --
