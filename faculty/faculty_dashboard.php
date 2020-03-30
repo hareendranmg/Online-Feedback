@@ -4,12 +4,10 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../css/bootstrap-3.4.1.min.css">
   <style>
     .bg_image {
   background-image: url("../img/student_dahboard.jpg"); /* The image used */
@@ -80,7 +78,13 @@ h1 {
         <li class="active"><a href="faculty_dashboard.php">Home</a></li>
         <li><a href="faculty_profile.php">Profile</a></li>
         <li><a href="view_feedback.php">View Feedback</a></li>
-        <li><a href="view_students.php">Students</a></li>
+        <li>
+            <a href="#stud_sub-menu" data-toggle="collapse" data-parent="#main-menu">Students<span class="caret"></span></a>
+            <div class="collapse list-group-level1" id="stud_sub-menu">
+                <a href="add_student.php" class="list-group-item bg" data-parent="#sub-menu2">Add student</a>
+                <a href="view_students.php" class="list-group-item bg" data-parent="#sub-menu2">View students</a>
+            </div>
+        </li>
         <li><a href="../logout.php">Logout</a></li>
       </ul><br>
     </div>
@@ -102,11 +106,14 @@ h1 {
 <footer class="container-fluid">
   <center>
         <p>Online Feedback</p>
-      </center>>
+      </center>
 </footer>
 
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/anime.min.js"></script>
 <script>
 var textWrapper = document.querySelector('.ml14 .letters');
 textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");

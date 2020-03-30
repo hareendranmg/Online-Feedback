@@ -11,7 +11,7 @@ include_once '../database/dbconfig.php';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="../css/bootstrap-3.4.1.min.css" />
+  <link rel="stylesheet" href="../css/bootstrap-3.4.1.min.css">
   <link rel="stylesheet" type="text/css" href="../css/main.css" />
 
   <style>
@@ -73,29 +73,35 @@ include_once '../database/dbconfig.php';
         <br />
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-9"><h2>Students</h2></div><br />
-            <div class="col-md-3">
-              <a href="add_student.php" class="btn btn-success">Add Student</a>
+            <div class="col-md-5"><h2>Students by Department</h2></div><br />
+            <div class="col-md-7">
+            <div class="pull-right">
+          <form class="form-inline" method="get" action="view_dep_students.php">
+              <div class="container-fluid ">
+                <div class="form-group">
+                  <select name="department_id" class="form-control" required="required">
+                    <option value="">--Select Department--</option>
+                      <?php
+                        $sql = "SELECT department.name, count(*) as count, department.id FROM `student` inner join department on student.department_id=department.id GROUP by department_id ";
+                        $result = mysqli_query($conn, $sql);
+
+                        while ($row = mysqli_fetch_array($result)) {
+                          ?>
+                    <option value="<?php echo $row['id'] ?>"><?php echo $row['name'].'('.$row['count'].')' ?> </option>
+                       <?php
+                        }
+                        ?>
+                  </select>
+                  <input type="submit" class="btn btn-primary" value="View Result">
+                </div>
+            </div>
+          </form>
+        </div>
+
             </div>
           </div>
         </div>
         <br />
-
-                        <?php
-                          if(isset($_GET['status'])) {
-                            if ($_GET['status'] == 'success') {
-                              echo ('<div class="alert text-center alert-success alert-dismissible">
-                              <a class="panel-close close" data-dismiss="alert">×</a>
-                              <strong>Successfully created student.</strong>
-                              </div>');
-                            } elseif ($_GET['status'] == 'failed') {
-                              echo ('<div class="alert text-center alert-danger alert-dismissible">
-                              <a class="panel-close close" data-dismiss="alert">×</a>
-                              <strong>Failed to create student.</strong>
-                              </div>');
-                            }
-                          }
-                        ?>
 
         <div class="table100 ver6 m-b-110">
           <!-- <form> -->
@@ -118,37 +124,38 @@ include_once '../database/dbconfig.php';
               </tr>
             </thead>
             <tbody>
-              <?php
-                $sql = 'SELECT * FROM `student`';
+            <?php
+            if(isset($_GET['department_id'])) {
+                $sql = "SELECT * FROM student where department_id = ".$_GET['department_id'];
                 $result = mysqli_query($conn, $sql);
                 $count = 0;
                 while ($rows = mysqli_fetch_array($result)) {
-                $count++;
-              ?>
-              <tr class="row100 data">
-                <td class="column100 column1 value" data-column="column1">
-                  <?php echo $count; ?>
-                </td>
-                <td class="column100 column2 value" data-column="column2">
-                  <?php echo $rows['name']; ?>
-                </td>
-                <td class="column100 column2 value" data-column="column2">
-                  <?php 
-                          $dep_sql = "select * from department where id = " . $rows['department_id'];
-                          $dep_result = mysqli_query($conn, $dep_sql);
-                          $dep_row = mysqli_fetch_array($dep_result);
-                          echo $dep_row['name']; 
-                  ?>
-                </td>
+                    $count++;
+            ?>
+                <tr class="row100 data">
+                    <td class="column100 column1 value" data-column="column1">
+                    <?php echo $count; ?>
+                    </td>
+                    <td class="column100 column2 value" data-column="column2">
+                    <?php echo $rows['name']; ?>
+                    </td>
+                    <td class="column100 column2 value" data-column="column2">
+                    <?php 
+                            $dep_sql = "select * from department where id = " . $rows['department_id'];
+                            $dep_result = mysqli_query($conn, $dep_sql);
+                            $dep_row = mysqli_fetch_array($dep_result);
+                            echo $dep_row['name']; ?>
+                    </td>
 
-                <td class="column100 column3" data-column="column3">
-                  <a class="btn btn-block btn-info"
-                    href="view_student_profile.php?student_id=<?php echo $rows['id'] ?>">View Profile</a>
-                </td>
-              </tr>
-              <?php
+                    <td class="column100 column3" data-column="column3">
+                    <a class="btn btn-block btn-info"
+                        href="view_student_profile.php?student_id=<?php echo $rows['id'] ?>">View Profile</a>
+                    </td>
+                </tr>
+            <?php
                 }
-              ?>
+            }
+            ?>
             </tbody>
           </table>
           <!-- </form> -->

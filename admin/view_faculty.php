@@ -11,7 +11,7 @@ include_once '../database/dbconfig.php';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/bootstrap-3.4.1.min.css">
   <link rel="stylesheet" type="text/css" href="../css/main.css" />
 
   <style>
@@ -36,17 +36,39 @@ include_once '../database/dbconfig.php';
 <body>
   <div class="container-fluid">
     <div class="row content">
-      <div class="col-sm-2 sidenav">
-        <h3>Welcome <?php echo ($_SESSION['login_user']); ?></h3>
-        <ul class="nav nav-pills nav-stacked">
-          <li><a href="admin_dashboard.php">Home</a></li>
-          <li><a href="view_feedback.php">View Feedback</a></li>
-          <li><a href="view_questions.php">Questions</a></li>
-          <li class="active"><a href="view_faculty.php">Faculty</a></li>
-          <li><a href="view_students.php">Students</a></li>
-          <li><a href="../logout.php">Logout</a></li>
-        </ul><br>
-      </div>
+                <div class="col-sm-2 sidenav">
+                    <h3>Welcome
+                        <?php echo ($_SESSION['login_user']); ?>
+                    </h3>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="admin_dashboard.php">Home</a></li>
+                        <li><a href="view_questions.php">Question</a></li>
+                        <li>
+                            <a href="#stud_sub-menu" data-toggle="collapse" data-parent="#main-menu">Student<span class="caret"></span></a>
+                            <div class="collapse list-group-level1" id="stud_sub-menu">
+                                <a href="add_student.php" class="list-group-item bg" data-parent="#sub-menu2">Add student</a>
+                                <a href="view_students.php" class="list-group-item bg" data-parent="#sub-menu2">View all students</a>
+                                <a href="view_dep_students.php" class="list-group-item bg" data-parent="#sub-menu2">View students by department</a>
+                            </div>
+                        </li>
+                        <li class="active">
+                            <a href="#fac_sub-menu" data-toggle="collapse" data-parent="#main-menu">Faculty<span class="caret"></span></a>
+                            <div class="collapse list-group-level1" id="fac_sub-menu">
+                                <a href="add_faculty.php" class="list-group-item bg" data-parent="#sub-menu2">Add faculty</a>
+                                <a href="view_faculty.php" class="list-group-item bg" data-parent="#sub-menu2">View all faculty</a>
+                                <a href="view_faculty_dep.php" class="list-group-item bg" data-parent="#sub-menu2">View by department</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#feedsub-menu" data-toggle="collapse" data-parent="#main-menu">Feedback<span class="caret"></span></a>
+                            <div class="collapse list-group-level1" id="feedsub-menu">
+                                <a href="view_dep_feedback.php" class="list-group-item bg" data-parent="#sub-menu">View department feedback</a>
+                                <a href="view_stud_feedback.php" class="list-group-item bg" data-parent="#sub-menu">View faculty faculty</a>
+                            </div>
+                        </li>
+                        <li><a href="../logout.php">Logout</a></li>
+                    </ul><br>
+                </div>
       <div class="col-sm-10">
         <br />
         <div class="container-fluid">
@@ -60,17 +82,20 @@ include_once '../database/dbconfig.php';
         <br />
 
                 <?php
-if ($_GET['status'] == 'success') {
-    echo ('<div class="alert text-center alert-success alert-dismissible">
-                                          <a class="panel-close close" data-dismiss="alert">×</a>
-                                          <strong>Successfully created faculty.</strong>
-                                         </div>');
-} elseif ($_GET['status'] == 'failed') {
-    echo ('<div class="alert text-center alert-danger alert-dismissible">
-                                          <a class="panel-close close" data-dismiss="alert">×</a>
-                                          <strong>Failed to update faculty.</strong>
-                                         </div>');
-}
+                if(isset($_GET['status'])) {
+
+                  if ($_GET['status'] == 'success') {
+                    echo ('<div class="alert text-center alert-success alert-dismissible">
+                    <a class="panel-close close" data-dismiss="alert">×</a>
+                    <strong>Successfully created faculty.</strong>
+                    </div>');
+                  } elseif ($_GET['status'] == 'failed') {
+                    echo ('<div class="alert text-center alert-danger alert-dismissible">
+                    <a class="panel-close close" data-dismiss="alert">×</a>
+                    <strong>Failed to update faculty.</strong>
+                    </div>');
+                  }
+                }
 ?>
         <div class="table100 ver6 m-b-110">
           <!-- <form> -->
@@ -131,13 +156,13 @@ $dep_sql = "select * from department where id = " . $rows['department_id'];
     </div>
   </div>
 
-  <footer class="container-fluid">
+  <footer class="container-fluid" style="margin-top: 50px">
     <center>
       <p>Online Feedback</p>
     </center>
   </footer>
 </body>
-<script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 
 </html>

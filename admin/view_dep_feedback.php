@@ -10,10 +10,8 @@ include_once '../database/dbconfig.php';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/main.css" />
 
     <style>
@@ -159,6 +157,6 @@ while ($ans_rows = mysqli_fetch_assoc($ans_result)) {
       </center>
     </footer>
   </body>
-  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
 </html>

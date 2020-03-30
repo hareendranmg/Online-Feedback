@@ -6,42 +6,26 @@ require_once '../database/dbconfig.php';
 $student_regid = $_SESSION['student_regid'];
 $student_id = $_SESSION['login_user_id'];
 $department_id = $_SESSION['department_id'];
-$data = $_POST['data'];
+$data = $_POST['arrays'];
+$faculty_id = $_POST['faculty_id'];
 $status = 0;
 
-$sql = "select feedback_submitted from student where regid = ".$student_regid;
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_array($result);
-
-if($row['feedback_submitted'] == 1) {
-    echo('submitted'); die;
-}
-
 foreach ($data as $key) {
-    $qn_name = $key[1];
-    $qn_answer = $key[2];
+    $qn_answer = $key[3];
     if ($qn_answer == 0) {
         echo ('invalid'); die;
     }
 }
+
 foreach ($data as $key) {
-    $qn_name = $key[1];
-    $qn_answer = $key[2];
-        $sql = "SELECT qn_id FROM `questions`
-            WHERE qn_name='" . $qn_name . "'";
-        $result_query = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_array($result_query);
-
-        $sql = "INSERT INTO `answers` (`student_id`, `qn_id`, `answer`, `department_id`)
-            VALUES (" . $student_id . "," . $row['qn_id'] . "," . $key[2] . "," . $department_id.")";
-        $result_query_ans = mysqli_query($conn, $sql);
-
-        $sql = "update student set feedback_submitted = 1 where regid = ".$student_regid;
-        $result_query_updt = mysqli_query($conn, $sql);
-
-        if ($result_query_ans && $result_query_updt) {
-            $status = 1;
-        }
+    $qn_id = $key[0];
+    $qn_answer = $key[3];
+    $sql = "INSERT INTO answers (student_id,  department_id, faculty_id, qn_id, answer)
+            VALUES (".$student_id.",".$department_id.",".$faculty_id.",".$qn_id.",".$qn_answer.")";
+    $result_query_ans = mysqli_query($conn, $sql);
+    if ($result_query_ans) {
+        $status = 1;
+    }
 }
 
 if ($status == 1) {

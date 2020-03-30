@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Online Feedback System</title>
-  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css'>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+  <link rel="stylesheet" href="./css/bootstrap-4.0.0.min.css">
+  <link rel="stylesheet" href="./css/bootstrap-3.4.1.min.css">
   <link rel="stylesheet" href="./css/index.style.css">
 
 </head>
@@ -83,15 +83,14 @@
       </div>
     </section>
 
-    <footer class="p-y-2">
+    <footer class="p-y-1">
       <p class="copyright"> H M G</p>
     </footer>
   </div>
   <!-- partial -->
 
 </body>
-  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js'></script>
+  <script src="./js/jquery.min.js"></script>
   <script src="./js/index.script.js"></script>
 
   <script>

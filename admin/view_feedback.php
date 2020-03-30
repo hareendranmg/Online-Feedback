@@ -135,6 +135,6 @@ include_once '../database/dbconfig.php';
       </center>
     </footer>
   </body>
-  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
 </html>

@@ -27,6 +27,7 @@ $gender = $row['gender'];
 $regid = $row['regid'];
 $dob = $row['dob'];
 $image = $row['image'];
+
 $feedback_submitted = $row['feedback_submitted'];
 
 ?>
@@ -37,22 +38,19 @@ $feedback_submitted = $row['feedback_submitted'];
   <title>Profile</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../css/bootstrap-3.4.1.min.css">
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
   <style>
-    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {
       height: 800px
     }
 
-    /* Set gray background color and 100% height */
     .sidenav {
       background-color: #f1f1f1;
       height: 100%;
     }
 
-    /* Set black background color, white text and some padding */
     footer {
       background-color: #555;
       color: white;
@@ -64,17 +62,39 @@ $feedback_submitted = $row['feedback_submitted'];
 <body>
   <div class="container-fluid">
     <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <h3>Welcome <?php echo ($_SESSION['login_user']); ?></h3>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="admin_dashboard.php">Home</a></li>
-        <li><a href="view_feedback.php">View Feedback</a></li>
-        <li><a href="view_questions.php">Questions</a></li>
-        <li><a href="view_faculty.php">Faculty</a></li>
-        <li class="active"><a href="view_students.php">Students</a></li>
-        <li><a href="../logout.php">Logout</a></li>
-      </ul><br>
-    </div>
+      <div class="col-sm-2 sidenav">
+                    <h3>Welcome
+                        <?php echo ($_SESSION['login_user']); ?>
+                    </h3>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="admin_dashboard.php">Home</a></li>
+                        <li><a href="view_questions.php">Question</a></li>
+                        <li class="active">
+                            <a href="#stud_sub-menu" data-toggle="collapse" data-parent="#main-menu">Student<span class="caret"></span></a>
+                            <div class="collapse list-group-level1" id="stud_sub-menu">
+                                <a href="add_student.php" class="list-group-item bg" data-parent="#sub-menu2">Add student</a>
+                                <a href="view_students.php" class="list-group-item bg" data-parent="#sub-menu2">View all students</a>
+                                <a href="view_dep_students.php" class="list-group-item bg" data-parent="#sub-menu2">View students by department</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#fac_sub-menu" data-toggle="collapse" data-parent="#main-menu">Faculty<span class="caret"></span></a>
+                            <div class="collapse list-group-level1" id="fac_sub-menu">
+                                <a href="add_faculty.php" class="list-group-item bg" data-parent="#sub-menu2">Add faculty</a>
+                                <a href="view_faculty.php" class="list-group-item bg" data-parent="#sub-menu2">View all faculty</a>
+                                <a href="view_faculty_dep.php" class="list-group-item bg" data-parent="#sub-menu2">View by department</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#feedsub-menu" data-toggle="collapse" data-parent="#main-menu">Feedback<span class="caret"></span></a>
+                            <div class="collapse list-group-level1" id="feedsub-menu">
+                                <a href="view_dep_feedback.php" class="list-group-item bg" data-parent="#sub-menu">View department feedback</a>
+                                <a href="view_stud_feedback.php" class="list-group-item bg" data-parent="#sub-menu">View faculty faculty</a>
+                            </div>
+                        </li>
+                        <li><a href="../logout.php">Logout</a></li>
+                    </ul><br>
+                </div>
 
       <div class="col-sm-10">
         <div class="container-fluid">
@@ -98,8 +118,8 @@ $feedback_submitted = $row['feedback_submitted'];
                   <br />
                   <br />
                   <div class="form-group">
-                    <label>Upload a different photo...</label>
-                    <input type="file">
+                    <label>Upload Photo</label>
+                    <input type="file" name="image">
                   </div>
                 </div>              
               </div>
@@ -107,18 +127,20 @@ $feedback_submitted = $row['feedback_submitted'];
               <div class="col-md-10 personal-info">
 
                 <?php
-                  if ($_GET['status'] == 'success') {
+                  if(isset($_GET['status'])) {
+                    if ($_GET['status'] == 'success') {
                       echo ('<div class="alert text-center alert-success alert-dismissible">
                                           <a class="panel-close close" data-dismiss="alert">×</a>
                                           <strong>Successfully updated student profile.</strong>
-                                         </div>');
+                                          </div>');
                   } elseif ($_GET['status'] == 'failed') {
                       echo ('<div class="alert text-center alert-danger alert-dismissible">
-                                          <a class="panel-close close" data-dismiss="alert">×</a>
+                      <a class="panel-close close" data-dismiss="alert">×</a>
                                           <strong>Failed to update student profile.</strong>
                                          </div>');
                   }
-                ?>
+                }
+                  ?>
 
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Name:</label>
@@ -130,18 +152,16 @@ $feedback_submitted = $row['feedback_submitted'];
                   <label class="col-lg-3 control-label">Department:</label>
                   <div class="col-lg-8">
                     <select name="department_id" class="form-control" required="required">
-                        <option value="<?php echo $department_id; ?>"><?php echo $department ?> </option>
-                        <option>====================</option></option>
                       <?php 
-                $sql = "select * from department";
-                $result = mysqli_query($conn, $sql);
+                        $sql = "select * from department";
+                        $result = mysqli_query($conn, $sql);
 
-                while($row = mysqli_fetch_array($result)) {
-              ?>
-                      <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?> </option>
-                      <?php
-                }
-              ?>
+                        while($row = mysqli_fetch_array($result)) {
+                      ?>
+                              <option <?php if($department_id == $row['id']) echo "selected" ?> value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?> </option>
+                              <?php
+                        }
+                      ?>
                     </select>
                   </div>
                 </div>
@@ -149,18 +169,16 @@ $feedback_submitted = $row['feedback_submitted'];
                   <label class="col-lg-3 control-label">Semester:</label>
                   <div class="col-lg-8">
                     <select name="semester_id" class="form-control" required="required">
-                        <option value="<?php echo $semester_id; ?>"><?php echo $semester ?> </option>
-                        <option>====================</option></option>
-                                <?php 
-                                  $sql = "select * from semester";
-                                  $result = mysqli_query($conn, $sql);
+                    <?php 
+                      $sql = "select * from semester";
+                      $result = mysqli_query($conn, $sql);
 
-                                  while($row = mysqli_fetch_array($result)) {
-                                ?>
-                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?> </option>
-                                        <?php
-                                  }
-                                ?>
+                      while($row = mysqli_fetch_array($result)) {
+                    ?>
+                            <option <?php if($semester_id == $row['id']) echo "selected" ?>  value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?> </option>
+                            <?php
+                      }
+                    ?>
                     </select>
                   </div>
                 </div>
@@ -174,7 +192,7 @@ $feedback_submitted = $row['feedback_submitted'];
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Mobile:</label>
                   <div class="col-lg-8">
-                    <input name="mobile" class="form-control" required="required" type="text" maxlength ="10" onkeypress="return isNumber(event)" value="<?php echo $mobile; ?>">
+                    <input name="mobile" class="form-control" required="required" type="text"  minlength="10" maxlength ="10" onkeypress="return isNumber(event)" value="<?php echo $mobile; ?>">
                   </div>
                 </div>
                 <div class="form-group">
@@ -189,8 +207,7 @@ $feedback_submitted = $row['feedback_submitted'];
                 <div class="form-group">
                   <label class="col-md-3 control-label">Admission No:</label>
                   <div class="col-md-8">
-                    <input name="regid" class="form-control" required="required" type="text"
-                      value="<?php echo $regid ?>">
+                    <input name="regid" class="form-control" required="required" type="text" minlength="6" maxlength="6" value="<?php echo $regid ?>">
                   </div>
                 </div>
                 <div class="form-group">
@@ -230,7 +247,7 @@ $feedback_submitted = $row['feedback_submitted'];
   <footer class="container-fluid">
     <center>
       <p>Online Feedback</p>
-    </center>>
+    </center>
   </footer>
 
 </body>

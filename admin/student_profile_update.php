@@ -16,26 +16,41 @@ $regid = $_POST['regid'];
 $dob = $_POST['dob'];
 $feedback_submitted = $_POST['feedback_submitted'];
 
-$image = '';
+$sql = "SELECT * FROM `student` WHERE `id` = " . $student_id;
+$result_query = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($result_query);
 
-if (isset($_FILES['image']) && $_FILES['image']['name'] != "") {
-    $image = $_FILES['image']['name'];
-    $image = str_replace(" ", "", $image);
-    $directory_self = str_replace(basename($_SERVER['PHP_SELF']),
-        '', $_SERVER['PHP_SELF']);
-    $uploadDirectory = $_SERVER['DOCUMENT_ROOT'] . "/login_main/img/";
-    $uploadDirectory .= $image;
-    move_uploaded_file($_FILES['image']['tmp_name'], $uploadDirectory);
-    $image = '../img/' . $image;
+$stud_sem = $row['semester_id'];
+$stud_feed = $row['feedback_submitted'];
+
+if($stud_sem == $semester_id) {
+    $feedback_submitted = (isset($_POST['feedback_submitted']))? $feedback_submitted: $stud_feed;
+}
+else{
+    $feedback_submitted = (isset($_POST['feedback_submitted']))? 0: $feedback_submitted;
 }
 
-if ($image == '') {
+$image_path = '';
+
+if (isset($_FILES['image']) && $_FILES['image']['name'] != "") {
+    $org_image_name = $_FILES['image']['name'];
+    $ext = pathinfo($org_image_name, PATHINFO_EXTENSION);
+    $image_name = $regid.'.'.$ext;
+
+    $directory_self = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['PHP_SELF']);
+    $uploadDirectory = $_SERVER['DOCUMENT_ROOT'] . "/Online-Feedback/img/";
+    $uploadDirectory .= $image_name;
+    move_uploaded_file($_FILES['image']['tmp_name'], $uploadDirectory);
+    $image_path = '../img/' . $image_name;
+}
+
+if ($image_path == '') {
     $sql = "UPDATE student SET
         name   = '$name',
         department_id = $department_id,
-        semester_id = '$semester_id',
+        semester_id = $semester_id,
         gender = $gender,
-        regid = '$regid',
+        regid = $regid,
         email  = '$email',
         mobile = $mobile,
         dob    = '$dob',
@@ -45,12 +60,12 @@ if ($image == '') {
     $sql = "UPDATE student SET
         name   = '$name',
         department_id = $department_id,
-        semester_id = '$semester_id',
+        semester_id = $semester_id,
         gender = $gender,
-        regid = '$regid',
+        regid = $regid,
         email  = '$email',
         mobile = $mobile,
-        image  = '$image',
+        image  = '$image_path',
         dob    = '$dob',
         feedback_submitted = $feedback_submitted
         WHERE id = $student_id";

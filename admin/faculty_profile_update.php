@@ -11,36 +11,38 @@ $department_id = $_POST['department_id'];
 $email = $_POST['email'];
 $mobile = $_POST['mobile'];
 
-$image = '';
+$image_path = '';
 
 if (isset($_FILES['image']) && $_FILES['image']['name'] != "") {
-    $image = $_FILES['image']['name'];
-    $image = str_replace(" ", "", $image);
+    $org_image_name = $_FILES['image']['name'];
+    $ext = pathinfo($org_image_name, PATHINFO_EXTENSION);
+    $image_name = $emp_code.'.'.$ext;
+
     $directory_self = str_replace(basename($_SERVER['PHP_SELF']),
         '', $_SERVER['PHP_SELF']);
-    $uploadDirectory = $_SERVER['DOCUMENT_ROOT'] . "/login_main/img/";
-    $uploadDirectory .= $image;
+    $uploadDirectory = $_SERVER['DOCUMENT_ROOT'] . "/Online-Feedback/img/";
+    $uploadDirectory .= $image_name;
     move_uploaded_file($_FILES['image']['tmp_name'], $uploadDirectory);
-    $image = '../img/' . $image;
+    $image_path = '../img/' . $image_name;
 }
 
-if ($image == '') {
+if ($image_path == '') {
     $sql = "UPDATE faculty SET
-        name   = '$name',
-        emp_code   = '$emp_code',
-        department_id   = '$department_id',
-        email  = '$email',
-        mobile = $mobile
-        WHERE id = $faculty_id";
+            name   = '$name',
+            emp_code   = $emp_code,
+            department_id   = $department_id,
+            email  = '$email',
+            mobile = $mobile
+            WHERE id = $faculty_id";
 } else {
     $sql = "UPDATE faculty SET
-        name   = '$name',
-        emp_code   = '$emp_code',
-        department_id   = '$department_id',
-        email  = '$email',
-        mobile = $mobile,
-        image  = '$image'
-        WHERE id = $faculty_id";
+            name   = '$name',
+            emp_code   = $emp_code,
+            department_id   = $department_id,
+            email  = '$email',
+            mobile = $mobile,
+            image  = '$image_path'
+            WHERE id = $faculty_id";
 }
 
 $result = mysqli_query($conn, $sql);

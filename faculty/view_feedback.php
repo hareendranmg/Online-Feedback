@@ -49,7 +49,13 @@ $department_id = $_SESSION['department_id'];
             <li><a href="faculty_dashboard.php">Home</a></li>
             <li><a href="faculty_profile.php">Profile</a></li>
             <li class="active"><a href="view_feedback.php">View Feedback</a></li>
-            <li><a href="view_students.php">Students</a></li>
+            <li>
+                <a href="#stud_sub-menu" data-toggle="collapse" data-parent="#main-menu">Students<span class="caret"></span></a>
+                <div class="collapse list-group-level1" id="stud_sub-menu">
+                    <a href="add_student.php" class="list-group-item bg" data-parent="#sub-menu2">Add student</a>
+                    <a href="view_students.php" class="list-group-item bg" data-parent="#sub-menu2">View students</a>
+                </div>
+            </li>
             <li><a href="../logout.php">Logout</a></li>
           </ul>
           <br />
@@ -130,6 +136,6 @@ $department_id = $_SESSION['department_id'];
       </center>
     </footer>
   </body>
-  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
 </html>

@@ -6,7 +6,7 @@ include_once '../database/dbconfig.php';
 $name = $_POST['name'];
 $email = $_POST['email'];
 $mobile = $_POST['mobile'];
-$department_id = $_POST['department_id'];
+$department_id = $_SESSION['department_id'];
 $semester_id = $_POST['semester_id'];
 $gender = $_POST['gender'];
 $regid = $_POST['regid'];

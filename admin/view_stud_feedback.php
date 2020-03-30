@@ -151,6 +151,6 @@ while ($ans_rows = mysqli_fetch_assoc($ans_result)) {
       </center>
     </footer>
   </body>
-  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
 </html>
