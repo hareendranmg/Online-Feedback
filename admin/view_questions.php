@@ -157,7 +157,7 @@ if($type == 'edit') {
                             <a href="#feedsub-menu" data-toggle="collapse" data-parent="#main-menu">Feedback<span class="caret"></span></a>
                             <div class="collapse list-group-level1" id="feedsub-menu">
                                 <a href="view_dep_feedback.php" class="list-group-item bg" data-parent="#sub-menu">View department feedback</a>
-                                <a href="view_stud_feedback.php" class="list-group-item bg" data-parent="#sub-menu">View faculty faculty</a>
+                                <a href="view_fac_feedback.php" class="list-group-item bg" data-parent="#sub-menu">View faculty faculty</a>
                             </div>
                         </li>
                         <li><a href="../logout.php">Logout</a></li>

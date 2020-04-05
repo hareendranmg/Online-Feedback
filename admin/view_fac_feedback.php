@@ -2,14 +2,20 @@
 session_start();
 include_once '../database/dbconfig.php';
 
-if(isset($_GET['department_id'])) {
+if(isset($_GET['faculty_id'])) {
     $department_id = $_GET['department_id'];
+    $faculty_id = $_GET['faculty_id'];
 
-    $sql = "select name from department where id=".$department_id;
+    $sql = "select department.name as dep, faculty.name as fac
+            from faculty inner join department 
+            on department.id = faculty.department_id 
+            where faculty.id=".$faculty_id;
+
     $res = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($res);
 
-    $department_name = $row['name'];
+    $department_name = $row['dep'];
+    $faculty_name = $row['fac'];
 }
 ?>
 
@@ -84,13 +90,13 @@ if(isset($_GET['department_id'])) {
         <br />
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-5"><h2>Feedback by Department</h2></div><br />
+            <div class="col-md-5"><h2>Feedback by Faculty</h2></div><br />
             <div class="col-md-7">
             <div class="pull-right">
-          <form class="form-inline" method="get" action="view_dep_feedback.php">
+          <form class="form-inline" method="get" action="view_fac_feedback.php">
               <div class="container-fluid ">
                 <div class="form-group">
-                  <select name="department_id" class="form-control" required="required">
+                  <select name="department_id" id="department_id" class="form-control" required="required">
                   <!-- <select name="department_id" id="department_id" class="form-control" required="required" onchange="getFac(this);"> -->
                     <option value="">--Select Department--</option>
                     <?php
@@ -102,6 +108,9 @@ if(isset($_GET['department_id'])) {
                     <?php
                     }
                     ?>
+                  </select>
+                  <select name="faculty_id" id="faculty_id" class="form-control" required="required" style="margin-left: 20px">
+                    <option value="">--Select Faculty--</option>
                   </select>
                   <input type="submit" class="btn btn-primary" value="View Result" style="margin-left: 20px">
                 </div>
@@ -117,12 +126,12 @@ if(isset($_GET['department_id'])) {
 
         
           <?php 
-            if(isset($_GET['department_id'])) {                
+            if(isset($_GET['faculty_id'])) {                
             $tot_sql = "select count(*) as count from student where department_id =".$department_id;
             $tot_res = mysqli_query($conn, $tot_sql);
             $tot_row = mysqli_fetch_assoc($tot_res);
 
-            $sub_sql = "select count(student_id) as count from answers where department_id =".$department_id." group by student_id";
+            $sub_sql = "select count(student_id) as count from answers where faculty_id =".$faculty_id." group by student_id";
             $sub_res = mysqli_query($conn, $sub_sql);
             $sub_row = mysqli_num_rows($sub_res);
           ?>
@@ -136,6 +145,14 @@ if(isset($_GET['department_id'])) {
                       </td>
                       <td class="column100 column2 value" data-column="column2">
                         <?php echo $department_name; ?>
+                      </td>
+                    </tr>
+                    <tr class="row100 data">
+                      <td class="column100 column1 value" data-column="column1"  style="width: 500px">
+                        Selected Faculty:
+                      </td>
+                      <td class="column100 column2 value" data-column="column2">
+                        <?php echo $faculty_name; ?>
                       </td>
                     </tr>
                     <tr class="row100 data">
@@ -193,10 +210,10 @@ if(isset($_GET['department_id'])) {
               </thead>
               <tbody>
                 <?php
-                    if(isset($_GET['department_id'])) {
+                    if(isset($_GET['faculty_id'])) {
                     $ans_sql = "select qn_name,avg(answer) as avg from answers 
                                 inner join questions on questions.qn_id = answers.qn_id 
-                                where department_id=".$department_id." 
+                                where faculty_id=".$faculty_id." 
                                 group by questions.qn_id";
                                 // print_r($ans_sql);
                     $ans_result = mysqli_query($conn, $ans_sql);
@@ -232,15 +249,15 @@ if(isset($_GET['department_id'])) {
                     </tr>
                 <?php
                     }
-                  }
-                  ?>
+                }
+                ?>
               </tbody>
             </table>
             <!-- </form> -->
           </div>
-        </div>
-      </div>
     </div>
+    </div>
+  </div>
 
   <footer class="container-fluid" style="margin-top: 50px">
     <center>
@@ -250,5 +267,40 @@ if(isset($_GET['department_id'])) {
 </body>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var AUSTRALIA = [{
+            display: "Canberra",value: "Canberra"},
+            {display: "Sydney",value: "Sydney"},
+            {display: "Melbourne",value: "Melbourne"},
+            {display: "Perth",value: "Perth"},
+            {display: "Gold Coast ",value: "Gold-Coast"}];
+
+        $("#department_id").change(function() {
+            var select = $("#department_id option:selected").val();
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                data: {department_id: select},
+                url: "get_faculty.php",
+                success: function (arr) {
+                    $("#faculty_id").empty();
+                    $("#faculty_id").append("<option value=''>--Select--</option>");
+                    $(arr).each(function(i) {
+                        $("#faculty_id").append("<option value='" + arr[i].id + "'>" + arr[i].name + "</option>")
+                    });
+                }
+            });
+        });
+    });
+    function faculty(arr) {
+        $("#faculty_id").empty();
+        $("#faculty_id").append("<option>--Select--</option>");
+        $(arr).forEach(function(fac) {
+            $("#faculty_id").append("<option value='" + fac.id + "'>" + fac.name + "</option>")
+        });
+    }
+</script>
 
 </html>
