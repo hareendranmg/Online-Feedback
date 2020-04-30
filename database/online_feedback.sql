@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 05, 2020 at 11:44 AM
+-- Generation Time: Apr 30, 2020 at 01:45 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.2.25
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `answer` int(11) NOT NULL,
   `answered_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `answers`
@@ -109,7 +109,11 @@ INSERT INTO `answers` (`answer_id`, `student_id`, `department_id`, `faculty_id`,
 (41, 9, 2, 13, 1, 1, '2020-04-05 11:42:14'),
 (42, 9, 2, 13, 2, 5, '2020-04-05 11:42:14'),
 (43, 9, 2, 13, 3, 5, '2020-04-05 11:42:14'),
-(44, 9, 2, 13, 4, 1, '2020-04-05 11:42:14');
+(44, 9, 2, 13, 4, 1, '2020-04-05 11:42:14'),
+(45, 1, 1, 2, 1, 5, '2020-04-30 13:40:56'),
+(46, 1, 1, 2, 2, 4, '2020-04-30 13:40:56'),
+(47, 1, 1, 2, 3, 4, '2020-04-30 13:40:56'),
+(48, 1, 1, 2, 4, 3, '2020-04-30 13:40:56');
 
 -- --------------------------------------------------------
 
@@ -279,11 +283,11 @@ CREATE TABLE IF NOT EXISTS `student` (
 --
 
 INSERT INTO `student` (`id`, `name`, `gender`, `email`, `mobile`, `department_id`, `semester_id`, `image`, `dob`, `regid`, `feedback_submitted`) VALUES
-(1, 'Hareendran', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/100001.jpg', '2000-01-01', 100001, 1),
-(2, 'Jalajan', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100002, 0),
-(3, 'Arshid', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100003, 0),
-(4, 'Mohit', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100004, 0),
-(5, 'Manu', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100005, 0),
+(1, 'com_stud_1', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/100001.jpg', '2000-01-01', 100001, 1),
+(2, 'com_stud_2', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100002, 0),
+(3, 'com_stud_3', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100003, 0),
+(4, 'com_stud_4', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100004, 0),
+(5, 'com_stud_5', 1, 'stud@gmail.com', 9876543210, 1, 1, '../img/no_image.jpg', '2000-01-01', 100005, 0),
 (6, 'civil_stud_1', 1, 'stud@gmail.com', 9876543210, 2, 1, '../img/no_image.jpg', '2000-01-01', 200001, 0),
 (9, 'civil_stud_2', 1, 'stud@gmail.com', 9876543210, 2, 1, '../img/no_image.jpg', '2000-01-01', 200002, 0),
 (10, 'civil_stud_3', 1, 'stud@gmail.com', 9876543210, 2, 1, '../img/no_image.jpg', '2000-01-01', 200003, 0),
@@ -300,8 +304,7 @@ INSERT INTO `student` (`id`, `name`, `gender`, `email`, `mobile`, `department_id
 (21, 'elect_stud_4', 1, 'stud@gmail.com', 9876543210, 4, 1, '../img/no_image.jpg', '2000-01-01', 400004, 0),
 (22, 'elect_stud_5', 1, 'stud@gmail.com', 9876543210, 4, 1, '../img/no_image.jpg', '2000-01-01', 400005, 0),
 (23, 'com_stud_6', 2, 'stud@gmail.com', 9876543210, 1, 1, '../img/765454.jpg', '2019-02-27', 765454, 0),
-(24, 'jhvhjv hchf bcc', 2, 'hjvgj@jvh.bbbbbbbb', 201201522, 3, 3, '../img/321232.jpg', '2021-05-31', 321232, 0),
-(25, 'jhvhjvhvjhvjhvjh', 2, 'hareendran.keltron@gmail.com', 4555555555, 1, 3, '../img/300132.jpg', '2023-12-12', 111111, 0);
+(24, 'jhvhjv hchf bcc', 2, 'hjvgj@jvh.bbbbbbbb', 201201522, 3, 3, '../img/321232.jpg', '2021-05-31', 321232, 0);
 
 --
 -- Indexes for dumped tables

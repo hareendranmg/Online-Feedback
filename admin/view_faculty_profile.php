@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['login_user'])){
+  header("Location: http://localhost/Online-Feedback/index.php");
+  exit();
+}
 include_once '../database/dbconfig.php';
 
 $faculty_id = $_GET['faculty_id'];
