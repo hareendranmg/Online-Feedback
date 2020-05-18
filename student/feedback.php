@@ -21,20 +21,20 @@ $student_id = $_SESSION['login_user_id'];
     <link rel="stylesheet" type="text/css" href="../css/main.css">
 
     <style>
-        .row.content {
-            height: 800px
-        }
+    .row.content {
+        height: 800px
+    }
 
-        .sidenav {
-            background-color: #f1f1f1;
-            height: 100%;
-        }
+    .sidenav {
+        background-color: #f1f1f1;
+        height: 100%;
+    }
 
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
+    footer {
+        background-color: #555;
+        color: white;
+        padding: 15px;
+    }
     </style>
 </head>
 
@@ -85,7 +85,7 @@ $student_id = $_SESSION['login_user_id'];
                                                         }
                                                         ?>
                                             </select>
-                                                                                        
+
                                             <input type="submit" class="btn btn-primary" value="Select">
                                         </div>
                                     </div>
@@ -110,6 +110,23 @@ $student_id = $_SESSION['login_user_id'];
                     }
                 ?>
                 <br>
+
+
+                <?php
+                    if (isset($_GET['status'])) {
+                        if ($_GET['status'] == 'success') {
+                            echo ('<div class="alert text-center alert-success alert-dismissible">
+                                                              <a class="panel-close close" data-dismiss="alert">×</a>
+                                                              <strong>Successfully submitted feedback.</strong>
+                                                              </div>');
+                        } elseif ($_GET['status'] == 'failed') {
+                            echo ('<div class="alert text-center alert-danger alert-dismissible">
+                                          <a class="panel-close close" data-dismiss="alert">×</a>
+                                                              <strong>Failed submit feedback.</strong>
+                                                             </div>');
+                        }
+                    }
+                ?>
                 <div class="table100 ver6 m-b-110">
                     <!-- <form> -->
                     <table data-vertable="ver6" id="feedback">
@@ -135,45 +152,45 @@ $student_id = $_SESSION['login_user_id'];
                                         while ($rows = mysqli_fetch_array($result)) {
                                             $count++;
                                     ?>
-                            <tr class="row100 data">
-                                <input type="hidden" class="value" value="<?php echo $rows['qn_id']; ?>">
-                                <td class="column100 column1 value" data-column="column1">
-                                    <?php echo $count; ?>
-                                    <!-- <?php echo $rows['qn_id']; ?> -->
-                                </td>
-                                <td class="column100 column2 value" data-column="column2">
-                                    <?php echo $rows['qn_name']; ?>
-                                </td>
-                                <td class="column100 column3" data-column="column3">
-                                    <select class="form-control value" required="required">
-                                        <option value="0">Select one</option>
-                                        <option value='5'>Excellent</option>
-                                        <option value='4'>Very Good</option>
-                                        <option value='3'>Good</option>
-                                        <option value='2'>Average</option>
-                                        <option value='1'>Poor</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <?php
+                <tr class="row100 data">
+                    <input type="hidden" class="value" value="<?php echo $rows['qn_id']; ?>">
+                    <td class="column100 column1 value" data-column="column1">
+                        <?php echo $count; ?>
+                        <!-- <?php echo $rows['qn_id']; ?> -->
+                    </td>
+                    <td class="column100 column2 value" data-column="column2">
+                        <?php echo $rows['qn_name']; ?>
+                    </td>
+                    <td class="column100 column3" data-column="column3">
+                        <select class="form-control value" required="required">
+                            <option value="0">Select one</option>
+                            <option value='5'>Excellent</option>
+                            <option value='4'>Very Good</option>
+                            <option value='3'>Good</option>
+                            <option value='2'>Average</option>
+                            <option value='1'>Poor</option>
+                        </select>
+                    </td>
+                </tr>
+                <?php
                                             }
                                         ?>
-                            <tr class="row100">
-                                <td class="column100 column1" data-column="column1"></td>
-                                <td class="column100 column1" data-column="column1"></td>
-                                <td class="column100 column1" data-column="column1">
-                                    <Button id="submit" class="btn btn-info btn-block" type="submit">Submit</Button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <?php
+                <tr class="row100">
+                    <td class="column100 column1" data-column="column1"></td>
+                    <td class="column100 column1" data-column="column1"></td>
+                    <td class="column100 column1" data-column="column1">
+                        <Button id="submit" class="btn btn-info btn-block" type="submit">Submit</Button>
+                    </td>
+                </tr>
+                </tbody>
+                <?php
                             }
                         ?>
-                    </table>
-                    <!-- </form> -->
-                </div>
+                </table>
+                <!-- </form> -->
             </div>
         </div>
+    </div>
     </div>
 
     <footer class="container-fluid">
@@ -186,39 +203,44 @@ $student_id = $_SESSION['login_user_id'];
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script>
-    $("#submit").on('click', function (e) {
-        // e.preventDefault();
-        var faculty_id = $("#faculty_id").val();
-        var arrays = [];
-        $("#feedback tr.data").map(function (index, elem) {
-            var ret = [];
-            $('.value', this).each(function () {
-                var d = $(this).val() || $(this).html();
-                ret.push(d);
-            });
-            arrays.push(ret);
+$("#submit").on('click', function(e) {
+    // e.preventDefault();
+    var faculty_id = $("#faculty_id").val();
+    var arrays = [];
+    $("#feedback tr.data").map(function(index, elem) {
+        var ret = [];
+        $('.value', this).each(function() {
+            var d = $(this).val() || $(this).html();
+            ret.push(d);
         });
-        
-        $.ajax({
-            type: "POST",
-            data: {arrays: arrays, faculty_id: faculty_id},
-            url: "feedback_submit.php",
-            success: function (msg) {
-                if (msg == 'invalid') {
-                    alert("Please answer all questions")
-                    location.reload();
-                }
-                if (msg == 'success') {
-                    alert("Successfully submitted feedback");
-                    location.replace("http://localhost/Online-Feedback/student/feedback.php");
-                }
-                if (msg == 'failed') {
-                    alert("Failed to submit feedback");
-                    location.replace("http://localhost/Online-Feedback/student/feedback.php");
-                }
-            }
-        });
+        arrays.push(ret);
     });
+
+    $.ajax({
+        type: "POST",
+        data: {
+            arrays: arrays,
+            faculty_id: faculty_id
+        },
+        url: "feedback_submit.php",
+        success: function(msg) {
+            if (msg == 'invalid') {
+                alert("Please answer all questions")
+                location.reload();
+            }
+            if (msg == 'success') {
+                <?php
+                header("Location: feedback.php?status=success");
+                ?>
+            }
+            if (msg == 'failed') {
+                <?php 
+                header("Location: feedback.php?status=failed");
+                    ?>
+            }
+        }
+    });
+});
 </script>
 
 </html>
